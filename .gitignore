@@ -1,0 +1,9 @@
+*.jar
+
+**/gradle
+**/.gradle
+**/build
+
+**/*.iml
+**/.idea
+**/detekt-baseline-test.xml
