@@ -1,0 +1,1 @@
+data class Instruction(val amountToMove: Int, val fromStack: StackIndex, val toStack: StackIndex)
