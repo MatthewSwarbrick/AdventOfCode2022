@@ -5,9 +5,9 @@ data class CrateStack(private val crates: Stack<Crate>) {
         crates.push(crate)
     }
 
-    fun removeFromStack(): Crate = crates.pop()
+    fun removeFromStack() = crates.pop()
 
-    fun getTopCrate(): Crate = crates.peek()
+    fun getTopCrate() = crates.peek()
 }
 
 @JvmInline

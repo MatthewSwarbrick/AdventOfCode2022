@@ -1,10 +1,10 @@
 import java.util.*
 
 fun main() {
-    val crateStacks = getCrates(input)
     val instructions = getInstructions(input)
-    part1(crateStacks, instructions)
-    part2()
+
+    part1(getCrates(input), instructions)
+    part2(getCrates(input), instructions)
 }
 
 private fun part1(crateStacks: Map<StackIndex, CrateStack>, instructions: List<Instruction>) {
@@ -21,8 +21,19 @@ private fun part1(crateStacks: Map<StackIndex, CrateStack>, instructions: List<I
     println("Part 1 | $topCrates")
 }
 
-private fun part2() {
-    println("Part 2 | ")
+private fun part2(crateStacks: Map<StackIndex, CrateStack>, instructions: List<Instruction>) {
+    instructions.map { instruction ->
+        IntRange(1, instruction.amountToMove)
+            .mapNotNull { crateStacks[instruction.fromStack]?.removeFromStack() }
+            .reversed()
+            .map { crateStacks[instruction.toStack]?.addToStack(it) }
+    }
+
+    val topCrates = crateStacks.values
+        .map { it.getTopCrate() }
+        .joinToString (separator = "") { it.letter }
+
+    println("Part 1 | $topCrates")
 }
 
 fun getCrates(input: List<String>) =
