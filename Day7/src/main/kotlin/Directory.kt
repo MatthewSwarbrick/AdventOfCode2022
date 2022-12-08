@@ -15,7 +15,7 @@ value class Name(val value: String) {
     }
 }
 
-fun List<Name>.toPathString() = "C:/ ${this.drop(1).joinToString(" / ") { it.value }} /"
+fun List<Name>.toPathString() = "C:/ ${this.drop(1).joinToString(" / ") { it.value }}"
 
 data class File(val name: Name, val size: Size) {
     companion object {

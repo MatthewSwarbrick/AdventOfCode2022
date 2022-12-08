@@ -1,35 +1,44 @@
 import Name.Companion.toName
+import Size.Companion.toSize
+
+private val TOTAL_DISK_SIZE = 70000000L.toSize()
+private val REQUIRED_FREE_SPACE = 30000000L.toSize()
 
 fun main() {
     val directories = getDirectories(input)
-    println(
-        directories.keys.joinToString("\n") { it }
-    )
     part1(directories)
-    part2()
+    part2(directories)
 }
 
 private fun part1(directories: Map<String, Directory>) {
     val sizes = directories.mapNotNull { (directoryPath, _) ->
         val size = directories.filterKeys { it.startsWith(directoryPath) }.values.sumOf { it.size().value }
-        if(size <= 100_000) {
-            size
-        } else {
-            null
-        }
+    if(size <= 100_000) {
+        size
+    } else {
+        null
     }
+}
     println("Part 1 | ${sizes.sum()}")
 }
 
-private fun part2() {
-    println("Part 2 | ")
+private fun part2(directories: Map<String, Directory>) {
+    val sizes = directories.map { (directoryPath, _) ->
+        directories.filterKeys { it.startsWith(directoryPath) }.values.sumOf { it.size().value }
+    }
+
+    val usedSpace = sizes.max()
+    val availableSpace = TOTAL_DISK_SIZE.value - usedSpace
+    val requiredToDelete = REQUIRED_FREE_SPACE.value - availableSpace
+
+    val smallestSize = sizes.filter { it >= requiredToDelete }.min()
+    println("Part 2 | $smallestSize")
 }
 
 typealias Path = List<Name>
 
 fun getDirectories(input: List<String>): Map<String, Directory> {
     var currentPath: Path = emptyList()
-
     return input
         .filter { !it.startsWith("dir") }
         .filter { !it.startsWith("$ ls") }
