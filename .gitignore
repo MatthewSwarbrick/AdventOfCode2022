@@ -7,3 +7,4 @@
 **/*.iml
 **/.idea
 **/detekt-baseline-test.xml
+.DS_Store
